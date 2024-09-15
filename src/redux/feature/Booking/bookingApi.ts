@@ -1,9 +1,8 @@
+// baseApi.ts
 import { baseApi } from '../../api/baseApi';
 
-// Create the API service
 export const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Create a new booking
     createBooking: builder.mutation({
       query: (newBooking) => ({
         url: 'bookings',
@@ -12,18 +11,16 @@ export const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Booking', 'Slot'],
     }),
-    // Fetch booking details by ID
-    getBookingDetails: builder.query({
-      query: (bookingId) => ({
-        url: `bookings/${bookingId}`,
+    getAllBookings: builder.query({
+      query: () => ({
+        url: 'bookings',
         method: 'GET',
       }),
       providesTags: ['Booking'],
     }),
-    // Fetch all bookings (admin use)
-    getAllBookings: builder.query({
-      query: () => ({
-        url: 'bookings',
+    getUserBookings: builder.query({
+      query: (email) => ({
+        url: `bookings/${email}`,
         method: 'GET',
       }),
       providesTags: ['Booking'],
@@ -33,6 +30,6 @@ export const bookingApi = baseApi.injectEndpoints({
 
 export const {
   useCreateBookingMutation,
-  useGetBookingDetailsQuery,
   useGetAllBookingsQuery,
+  useGetUserBookingsQuery,
 } = bookingApi;

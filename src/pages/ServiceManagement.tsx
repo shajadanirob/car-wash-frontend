@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDeleteServiceMutation, useGetAllServiceQuery, useUpdateServiceMutation } from '../redux/feature/service/serviceApi';
+
+import { useDeleteServiceMutation, useGetAllServiceQuery } from '../redux/feature/service/serviceApi';
 import { toast } from 'sonner';
 import Modal from '../components/Modal';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,6 @@ const ServiceManagement = () => {
   const { data, error, isLoading } = useGetAllServiceQuery('');
   const [deleteService] = useDeleteServiceMutation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [updateService] = useUpdateServiceMutation();
 
   // Loading and Error States
   if (isLoading) return <div>Loading...</div>;

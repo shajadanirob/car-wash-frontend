@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../redux/feature/auth/authApi';
 import { toast } from 'sonner';
@@ -11,7 +10,7 @@ export default function SignUpForm() {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
-    const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
     const [register] = useRegisterMutation();
 
@@ -42,6 +41,7 @@ export default function SignUpForm() {
             console.log(response);
             toast.success("Registration successful!");
             navigate('/login'); // Redirect to login page
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.message || "Registration failed. Please try again.");
         }

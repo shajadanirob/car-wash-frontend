@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from 'sonner';
 import { useGetAvailableSlotsQuery, useCreateSlotMutation, useUpdateSlotMutation } from '../redux/feature/slots/slotApi';
 import { useGetAllServiceQuery } from '../redux/feature/service/serviceApi';
+import { useEffect, useState } from 'react';
 
 
 const SlotManagement = () => {

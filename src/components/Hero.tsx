@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 const images = [
   'http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_01.jpg',

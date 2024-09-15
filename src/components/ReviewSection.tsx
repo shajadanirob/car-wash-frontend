@@ -1,112 +1,21 @@
-// import React, { useState } from 'react';
-// import { FaStar } from 'react-icons/fa';
-
-// const StaticReviewSection = () => {
-//   const [rating, setRating] = useState(4);
-//   const [feedback, setFeedback] = useState('Great product!');
-
-//   // Static review data
-//   const reviews = [
-//     { id: 1, rating: 4, feedback: 'Great product!' },
-//     { id: 2, rating: 5, feedback: 'Excellent quality!' },
-//   ];
-//   const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
-
-//   const handleStarClick = (index: number) => {
-//     setRating(index + 1);
-//   };
-
-//   const handleSubmit = () => {
-//     alert('Review submitted!');
-//     // Normally, here you'd handle form submission
-//   };
-
-//   return (
-//    <div>
-//   <h2 className="text-2xl font-bold mb-4">Leave a Review</h2>
-// <div className="p-6  rounded-lg shadow-md  max-w-screen-xl mx-auto px-8 md:px-16 lg:px-24 py-5">
-    
-
-    //   <div className="flex items-center mb-4">
-        // {[...Array(5)].map((_, index) => (
-        //   <FaStar
-        //     key={index}
-        //     className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-        //     onClick={() => handleStarClick(index)}
-        //   />
-        // ))}
-    //   </div>
-
-    //   <textarea
-    //     className="w-full h-32 p-2 border border-gray-300 rounded-lg mb-4"
-    //     placeholder="Write your feedback here..."
-    //     value={feedback}
-    //     onChange={(e) => setFeedback(e.target.value)}
-    //   />
-
-    //   <button
-    //     onClick={handleSubmit}
-    //     className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-    //   >
-    //     Submit Review
-    //   </button>
-
-//       <div className="mt-6">
-//         <h3 className="text-xl font-semibold">Overall Rating</h3>
-//         <div className="text-lg font-bold text-yellow-500">{averageRating.toFixed(1)} / 5</div>
-//       </div>
-
-//       <div className="mt-6">
-//         <h3 className="text-xl font-semibold">Recent Reviews</h3>
-//         {reviews.slice(0, 2).map((review) => (
-//           <div key={review.id} className="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-//             <div className="flex items-center mb-2">
-//               {[...Array(5)].map((_, index) => (
-//                 <FaStar
-//                   key={index}
-//                   className={`text-yellow-500 ${index < review.rating ? 'text-yellow-500' : 'text-gray-300'}`}
-//                 />
-//               ))}
-//             </div>
-//             <p>{review.feedback}</p>
-//           </div>
-//         ))}
-//         <button
-//           onClick={() => alert('Redirecting to reviews page...')}
-//           className="mt-4 py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-//         >
-//           See All Reviews
-//         </button>
-//       </div>
-//     </div>
-
-
-
-//    </div>
-//   );
-// };
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 const ReviewsSection = () => {
-    const [rating, setRating] = useState(4);
-  const [feedback, setFeedback] = useState('Great product!');
+  const [rating, setRating] = useState(4);
 
   // Static review data
-  const reviews = [
-    { id: 1, rating: 4, feedback: 'Great product!' },
-    { id: 2, rating: 5, feedback: 'Excellent quality!' },
-  ];
-  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 
   const handleStarClick = (index: number) => {
     setRating(index + 1);
   };
+
   return (
     <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <h1 className='text-center my-10 text-[#e81c2e]  md:text-2xl font-semibold'>FEEDBACK</h1>
-        <h1 className='text-center my-10 text-4xl md:text-6xl font-semibold'>Coustomer Feedback</h1>
+      <h1 className='text-center my-10 text-[#e81c2e] md:text-2xl font-semibold'>FEEDBACK</h1>
+      <h1 className='text-center my-10 text-4xl md:text-6xl font-semibold'>Customer Feedback</h1>
       <div className="my-20">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {/* Overview - start */}
@@ -117,13 +26,13 @@ const ReviewsSection = () => {
               <div className="mb-0.5 flex items-center gap-2">
                 {/* Stars - start */}
                 <div className="-ml-1 flex gap-0.5">
-                {[...Array(5)].map((_, index) => (
-          <FaStar
-            key={index}
-            className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-            onClick={() => handleStarClick(index)}
-          />
-        ))}
+                  {[...Array(5)].map((_, index) => (
+                    <FaStar
+                      key={index}
+                      className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                      onClick={() => handleStarClick(index)}
+                    />
+                  ))}
                 </div>
                 {/* Stars - end */}
 
@@ -133,33 +42,33 @@ const ReviewsSection = () => {
               <span className="block text-sm text-gray-500">Based on 27 reviews</span>
 
               <form>
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-lg font-medium text-gray-700 mb-2">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="message" className="block text-lg font-medium text-gray-700 mb-2">Review</label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-2 bg-[#e81c2e] text-white rounded-lg hover:bg-red-600 transition"
-            >
-              Submit
-            </button>
-          </form>
-             
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-lg font-medium text-gray-700 mb-2">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="message" className="block text-lg font-medium text-gray-700 mb-2">Review</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-red-500"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-2 bg-[#e81c2e] text-white rounded-lg hover:bg-red-600 transition"
+                >
+                  Submit
+                </button>
+              </form>
+
             </div>
           </div>
           {/* Overview - end */}

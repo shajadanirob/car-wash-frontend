@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useGetSingleServicesQuery, useUpdateServiceMutation } from '../redux/feature/service/serviceApi';
-
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 const UpdateService: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetSingleServicesQuery(id);
+  const { data, isLoading } = useGetSingleServicesQuery(id);
   const [updateProduct] = useUpdateServiceMutation();
 
   const [formState, setFormState] = useState({
@@ -43,23 +43,28 @@ const UpdateService: React.FC = () => {
       toast.success('Product updated successfully');
       navigate(`/productDetails/${id}`);
     } catch (err) {
-      console.error('Failed to update the product:', err);
+      if (err && typeof err === 'object') {
+        // Handle FetchBaseQueryError or SerializedError
+        const fetchError = err as FetchBaseQueryError;
+        let errorMessage = 'An unknown error occurred.';
+        
+        if ('status' in fetchError) {
+          // Handle FetchBaseQueryError
+          errorMessage = 'error' in fetchError ? fetchError.error : JSON.stringify(fetchError.data);
+        } else if ('message' in fetchError) {
+          // Handle SerializedError
+          errorMessage = fetchError;
+        }
+        
+        toast.error(`Failed to update the product: ${errorMessage}`);
+      } else {
+        // Fallback for non-object errors
+        toast.error('Failed to update the product: Unknown error');
+      }
     }
   };
 
   if (isLoading) return <div>Loading...</div>;
-  
-  let errorMessage;
-  if (error) {
-    if ('status' in error) {
-      // Handle FetchBaseQueryError
-      errorMessage = 'error' in error ? error.error : JSON.stringify(error.data);
-    } else {
-      // Handle SerializedError
-      errorMessage = error.message;
-    }
-    return <div>Error: {errorMessage}</div>;
-  }
 
   return (
     <div className="max-w-lg mx-auto p-4">
@@ -95,7 +100,7 @@ const UpdateService: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Stock</label>
+          <label className="block text-gray-700">Duration</label>
           <input
             type="number"
             name="duration"

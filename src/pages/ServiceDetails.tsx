@@ -4,26 +4,32 @@ import { toast } from 'sonner'; // Assuming you're using 'sonner' for toasts
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { useGetAvailableSlotsQuery, useUpdateSlotMutation } from '../redux/feature/slots/slotApi';
+import { useGetAvailableSlotsQuery } from '../redux/feature/slots/slotApi';
 import { useGetSingleServicesQuery } from '../redux/feature/service/serviceApi';
 
-const ServiceDetails = () => {
-  const { id: serviceId } = useParams();
+interface Slot {
+  _id: string;
+  startTime: string;
+  endTime: string;
+  isBooked: string;
+}
+
+const ServiceDetails: React.FC = () => {
+  const { id: serviceId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const { data: serviceData, error: serviceError, isLoading: serviceLoading } = useGetSingleServicesQuery(serviceId);
   const { data: slotsData, error: slotsError, isLoading: slotsLoading } = useGetAvailableSlotsQuery({
-    serviceId,
-    date: selectedDate.toISOString().split('T')[0],
+    serviceId: serviceId || '',
+    date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
   });
-  const [updateSlot] = useUpdateSlotMutation();
 
   useEffect(() => {
     setSelectedSlot(null);
   }, [selectedDate, slotsData]);
 
-  const handleSlotClick = (slot) => {
+  const handleSlotClick = (slot: Slot) => {
     if (slot.isBooked === 'BOOKED') {
       toast.error('This slot is already booked');
     } else {
@@ -38,9 +44,9 @@ const ServiceDetails = () => {
     }
     navigate('/booking', {
       state: {
-        service: serviceData.data,
+        service: serviceData?.data,
         selectedSlot,
-        selectedDate: selectedDate.toISOString().split('T')[0],
+        selectedDate: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
       },
     });
   };
@@ -60,7 +66,7 @@ const ServiceDetails = () => {
         <label className="block mb-2 font-medium">Select Date:</label>
         <DatePicker
           selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
+          onChange={(date) => setSelectedDate(date as Date)}
           className="px-4 py-2 border rounded"
         />
       </div>
@@ -68,7 +74,7 @@ const ServiceDetails = () => {
       <div className="mb-6">
         <h3 className="text-xl font-semibold mb-2">Available Time Slots</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {slots.map((slot) => (
+          {slots.map((slot: Slot) => (
             <button
               key={slot._id}
               onClick={() => handleSlotClick(slot)}

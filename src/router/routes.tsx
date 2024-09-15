@@ -11,6 +11,11 @@ import UpdateService from "../pages/UpdateService";
 import SlotManagement from "../pages/SlotManagement";
 import ServiceDetails from "../pages/ServiceDetails";
 import BookingPage from "../pages/Booking";
+import UserDashboard from "../pages/UserDashboard";
+import UserProtecedRoute from "../layout/UserProtecedRoute";
+
+import UserBooking from "../pages/UserBooking";
+import UserProfile from "../pages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +76,39 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
+    ]
+
+
+
+
+  },
+  {
+    path: "/userDashboard",
+    element: (
+     <UserProtecedRoute userOnly={true}>
+<UserDashboard/>
+     </UserProtecedRoute>
+    ),
+
+    children:[
+        {
+        path: "/userDashboard",
+        element: (
+          <UserProtecedRoute userOnly={true}>
+          <UserProfile/>
+               </UserProtecedRoute>
+        ),
+      },
+        {
+        path: "/userDashboard/myBooking",
+        element: (
+          <UserProtecedRoute userOnly={true}>
+          <UserBooking/>
+               </UserProtecedRoute>
+        ),
+      },
+        
 
     ]
 

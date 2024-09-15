@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useCreateServiceMutation } from "../redux/feature/service/serviceApi";
-import { useAppDispatch } from "../redux/hooks";
 
 
 const Modal = () => {
   const [openModal, setOpenModal] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [createProduct] =
-    useCreateServiceMutation();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dispatch = useAppDispatch();
+  const [createProduct] = useCreateServiceMutation();
 
   useEffect(() => {
     if (openModal) {
@@ -33,7 +28,7 @@ const Modal = () => {
     const description = form.description.value;
     const isDeleted = false;
 
-    const productInfo = { name, price, duration, description, image,isDeleted };
+    const productInfo = { name, price, duration, description, image, isDeleted };
     console.log("Service created successfully", productInfo);
     try {
       await createProduct(productInfo).unwrap();
@@ -50,7 +45,7 @@ const Modal = () => {
         onClick={() => setOpenModal(true)}
         className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out"
       >
-        Create a Services
+        Create a Service
       </button>
       <div
         className={`fixed flex justify-center items-center z-[100] ${
@@ -98,7 +93,6 @@ const Modal = () => {
                       className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
                     />
                   </div>
-                
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="price"
@@ -129,10 +123,10 @@ const Modal = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label
-                      htmlFor="stock"
+                      htmlFor="duration"
                       className="mb-2 inline-block text-sm text-gray-800 sm:text-base"
                     >
-                    duration
+                      Duration
                     </label>
                     <input
                       type="number"
@@ -159,9 +153,6 @@ const Modal = () => {
                       Post
                     </button>
                   </div>
-   
-
-
                 </form>
               </div>
             </div>

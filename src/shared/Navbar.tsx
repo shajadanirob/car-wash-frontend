@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+
 import {  Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { logout, selectCurrentUser } from '../redux/feature/auth/authSlice';
+import { useState } from 'react';
 
 const Navbar = () => {
 
@@ -19,7 +20,7 @@ const Navbar = () => {
   const userRole = {
     ADMIN: 'admin',
     FACULTY: 'faculty',
-    STUDENT: 'student',
+    USER: 'user',
   };
   const user = useAppSelector(selectCurrentUser);
   const NavItem = (
@@ -59,6 +60,16 @@ const Navbar = () => {
       {user?.role === userRole.ADMIN && (
           <NavLink
             to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? 'text-blue-700' : 'text-white dark:text-white'
+            }
+          >
+            Dashboard
+          </NavLink>
+        )}
+      {user?.role === userRole.USER && (
+          <NavLink
+            to="/userDashboard"
             className={({ isActive }) =>
               isActive ? 'text-blue-700' : 'text-white dark:text-white'
             }
